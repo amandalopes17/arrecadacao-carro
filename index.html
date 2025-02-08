@@ -1,1 +1,179 @@
-!DOCTYPE.html
+<!DOCTYPE html>
+ <html lang="pt-BR"> 
+<head> 
+<meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+ <title>Arrecadação para Conserto do Carro</title>
+ <style>
+body {
+  font-family: Arial, sans-serif;
+  background: #e3f2fd;
+  color: #1a237e; 
+  margin: 0; padding: 20px; } 
+   .container {
+     max-width: 800px;
+     margin: 0 auto; 
+     background: #ffffff;
+     border-radius: 8px;
+     padding: 20px; 
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+     border: 2px solid #90caf9; }
+   
+   h1 { 
+     text-align: center;
+     color: #0d47a1; } 
+   
+   .info-section { 
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin: 20px 0; } 
+   
+   .info-section img {
+     max-width: 100%;
+     height: auto;
+     border-radius: 8px; } 
+   
+   .donation-summary {
+     background: #bbdefb;
+     padding: 15px;
+     border: 2px solid #64b5f6;
+     border-radius: 8px;
+     text-align: center; 
+     width: 40%; }
+   
+   .donation-summary p {
+     margin: 10px 0;
+     font-size: 1.2em;}
+   
+   .button {
+     display: inline-block;
+     margin-top: 10px;
+     padding: 10px 20px;
+     background: #1976d2;
+     color: #fff;
+     text-decoration: none;
+     border-radius: 5px; 
+     font-weight: bold;
+     cursor: pointer;
+     border: none; }
+   
+   .button:hover {
+     background: #1565c0;}
+   
+   input[type="number"], input[type="text"] { 
+     padding: 8px;
+     font-size: 1em;
+     width: 150px; 
+     margin: 5px;
+     border: 1px solid #64b5f6;
+     border-radius: 4px; }
+   
+   .gallery {
+     margin: 20px 0;
+     text-align: center; }
+   
+   .gallery h2 {
+     color: #0d47a1;}
+   
+   .gallery-images {
+     display: grid;
+     grid-template-columns: repeat(2, 1fr);
+     gap: 10px;
+     max-width: 600px;
+     margin: 0 auto; }
+   
+   .gallery-images img {
+     width: 100%; 
+     height: 250px;
+     object-fit: cover;
+     border: 1px solid #bbb;
+     border-radius: 8px; }
+   
+   footer { text-align: center;
+           margin-top: 30px;
+           font-size: 1.1em;
+           color: #1a237e; }
+ 
+ </style>
+  
+ <script> // Função para copiar a chave Pix para a área de transferência function copyPixKey() {
+   const pixKey = document.getElementById("pixKey")
+     .textContent; 
+   navigator.clipboard.writeText(pixKey) .then(() => { alert("Chave Pix copiada: " + pixKey); })
+     .catch(err => { alert("Erro ao copiar: " + err); });
+   }
+   // Lógica para atualizar o valor de doações let totalDonation = 0;
+   let donatorsCount = 0;
+   function addDonation() {
+     const donationInput = document.getElementById("donationInput");
+     const nameInput = document.getElementById("donatorName"); 
+     const donationValue = parseFloat(donationInput.value);
+     const donorName = nameInput.value.trim();
+     
+     if (isNaN(donationValue) || donationValue <= 0 || donorName === "") 
+     { alert("Por favor, preencha o nome e digite um valor válido.");
+      return; } 
+     totalDonation += donationValue;
+     donatorsCount++;
+     document.getElementById("donationTotal").textContent = `R$ ${totalDonation.toFixed(2)}`;
+     document.getElementById("donatorsCount").textContent = donatorsCount;
+     // Limpar os campos após adicionar a doação donationInput.value = "";
+     nameInput.value = "";
+   }
+ </script>
+</head>
+   <body>
+     
+ <div class="container">
+   <h1>Arrecadação para Conserto do Carro<br>
+     Motorista de App</h1>
+   <!-- Seção da imagem principal --> 
+   <div class="info-section">
+     <div class="image"> <img src="2.jpeg" alt="Foto Principal do Carro">
+     </div> <!-- Quadro de resumo da arrecadação -->
+     <div class="donation-summary">
+       <p><strong>Arrecadado</strong></p>
+       <p id="donationTotal">R$ 0.00</p> 
+       <p><strong>Meta</strong></p> <p>R$ 7.000,00</p>
+       <p><strong>Apoiadores</strong></p>
+       <p id="donatorsCount">0</p>
+     </div>
+   </div>
+   <p>Meu marido foi vítima de um golpe: bandidos se passaram por passageiros, solicitaram uma corrida, anunciaram o assalto e, na fuga, capotaram o carro – o único instrumento de trabalho dele como motorista de aplicativo.<br> 
+     Precisamos de ajuda para realizar o conserto para que ele possa voltar a trabalhar.<br>
+     Agradeço imensamente por qualquer apoio e por compartilhar essa campanha.</p><br>
+   
+<!-- Seção da chave Pix -->
+   <div class="pix">
+     <p>Chave Pix: <span id="pixKey">amanda.slopes17@gmail.com</span></p>
+     <button class="button" onclick="copyPixKey()">Clique aqui para copiar a chave Pix</button>
+     <p>Recebedor: Amanda da Silva Lopes</p><br> 
+     <p>Banco: Caixa Econômica Federal</p><br>
+     
+ </div> <!-- Seção de atualização de valor de doação --> <div class="donation">
+   <h2>Atualizar Valor de Doação</h2>
+   <p>Total de doações: R$ <span id="donationTotal">0.00</span></p>
+   <p>Nome: <input type="text" id="donatorName" placeholder="Seu nome"></p>
+   <input type="number" id="donationInput" placeholder="Valor da doação" step="0.01">
+   <button class="button" onclick="addDonation()">Adicionar Doação</button>
+   
+ </div> <!-- Galeria de imagens --> <div class="gallery">
+   <h2>Galeria de Imagens</h2>
+   <div class="gallery-images">
+     <img src="1.jpeg" alt="Imagem 1">
+     <img src="3.jpeg" alt="Imagem 3">
+     <img src="4.jpeg" alt="Imagem 4">
+     <img src="5.jpeg" alt="Imagem 5">
+   </div> 
+ </div>
+ </div>
+     <!-- Rodapé -->
+     <footer> <p>Agradecemos de coração sua generosidade e contribuição.<br>
+       Que Deus abençoe abundantemente sua vida!</p>
+     </footer>
+   </body>
+ </html>
+   
+
