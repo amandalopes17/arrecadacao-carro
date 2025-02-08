@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arrecadação para Conserto do Carro</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e8f5e9; /* Fundo verde claro */
+      color: #2e7d32; /* Texto em verde escuro */
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border: 2px solid #a5d6a7; /* Bordas em verde suave */
+    }
+    h1, h2 {
+      text-align: center;
+      color: #388e3c; /* Verde mais intenso para os títulos */
+    }
+    .image, .gallery {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .image img, .gallery img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 5px;
+    }
+    .pix, .donation {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .pix p, .donation p {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    .button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #43a047; /* Botão verde */
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+    .button:hover {
+      background: #388e3c; /* Verde mais escuro ao passar o mouse */
+    }
+    input[type="number"] {
+      padding: 8px;
+      font-size: 1em;
+      width: 150px;
+      margin-right: 10px;
+      border: 1px solid #a5d6a7;
+      border-radius: 4px;
+    }
+  </style>
+  <script>
+    // Função para copiar a chave Pix para a área de transferência
+    function copyPixKey() {
+      const pixKey = document.getElementById("pixKey").textContent;
+      navigator.clipboard.writeText(pixKey)
+        .then(() => { alert("Chave Pix copiada: " + pixKey); })
+        .catch(err => { alert("Erro ao copiar: " + err); });
+    }
+
+    // Lógica simples para atualizar o total de doações
+    let totalDonation = 0;
+    function addDonation() {
+      const donationInput = document.getElementById("donationInput");
+      const donationValue = parseFloat(donationInput.value);
+      if (isNaN(donationValue) || donationValue <= 0) {
+        alert("Digite um valor válido.");
+        return;
+      }
+      totalDonation += donationValue;
+      document.getElementById("donationTotal").textContent = totalDonation.toFixed(2);
+      donationInput.value = "";
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Arrecadação para Conserto do Carro</h1>
+    
+    <div class="image">
+      <!-- Imagem principal (substitua pelo caminho ou URL correto) -->
+      <img src="sua_imagem_do_carro.jpg" alt="Foto do Carro">
+    </div>
+    
+    <p>Fui vítima de um golpe: bandidos se passaram por passageiros, solicitaram uma corrida, anunciaram o assalto e, na fuga, capotaram meu carro – meu único instrumento de trabalho como motorista de aplicativo. Preciso de ajuda para realizar o conserto e voltar a trabalhar. Agradeço imensamente por qualquer apoio e por compartilhar essa campanha.</p>
+    
+    <div class="pix">
+      <p>Chave Pix: <span id="pixKey">amanda.slopes17@gmail.com</span></p>
+      <button class="button" onclick="copyPixKey()">Clique aqui para copiar a chave Pix</button>
+    </div>
+    
+    <div class="gallery">
+      <h2>Galeria de Imagens</h2>
+      <!-- Substitua as imagens pelos seus arquivos -->
+      <img src="imagem1.jpg" alt="Imagem 1">
+      <img src="imagem2.jpg" alt="Imagem 2">
+      <img src="imagem3.jpg" alt="Imagem 3">
+    </div>
+    
+    <div class="donation">
+      <h2>Atualizar Valor de Doação</h2>
+      <p>Total de doações: R$ <span id="donationTotal">0.00</span></p>
+      <input type="number" id="donationInput" placeholder="Valor da doação" step="0.01">
+      <button class="button" onclick="addDonation()">Adicionar Doação</button>
+    </div>
+  </div>
+</body>
+</html>
