@@ -126,10 +126,17 @@
     }
   </style>
   <script>
-    let totalDonation = 0;
-    let donatorsCount = 0;
+    // Recuperar dados do localStorage ao carregar a página
+    let totalDonation = parseFloat(localStorage.getItem("totalDonation")) || 0;
+    let donatorsCount = parseInt(localStorage.getItem("donatorsCount")) || 0;
     let currentImageIndex = 0;
     const images = ["1.jpeg", "2.jpeg", "3.jpeg", "4.jpeg", "5.jpeg"];
+
+    // Atualizar os valores na página
+    function updateDonationInfo() {
+      document.getElementById("donationTotal").textContent = `R$ ${totalDonation.toFixed(2)}`;
+      document.getElementById("donatorsCount").textContent = donatorsCount;
+    }
 
     function showImage(index) {
       const galleryImage = document.getElementById("galleryImage");
@@ -157,11 +164,17 @@
         return;
       }
 
+      // Atualizar os valores de doação e número de doadores
       totalDonation += donationValue;
       donatorsCount++;
-      document.getElementById("donationTotal").textContent = `R$ ${totalDonation.toFixed(2)}`;
-      document.getElementById("donatorsCount").textContent = donatorsCount;
+      
+      // Atualizar no localStorage
+      localStorage.setItem("totalDonation", totalDonation);
+      localStorage.setItem("donatorsCount", donatorsCount);
 
+      updateDonationInfo();
+
+      // Limpar os campos
       donationInput.value = "";
       nameInput.value = "";
     }
@@ -174,6 +187,9 @@
         alert("Erro ao copiar chave Pix: " + err);
       });
     }
+
+    // Chamar a função para atualizar as informações na página ao carregar
+    window.onload = updateDonationInfo;
   </script>
 </head>
 <body>
