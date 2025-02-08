@@ -1,151 +1,147 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Arrecadação para Conserto do Carro</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #e8f5e9; /* Fundo verde claro */
-      color: #2e7d32; /* Texto em verde escuro */
-      margin: 0;
-      padding: 20px;
-    }
-    .container {
+<!DOCTYPE html> 
+<html lang="pt-BR"> <head> 
+  <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Arrecadação para Conserto do Carro</title> 
+  <style> body {
+  font-family: Arial, sans-serif; 
+  background: #e3f2fd;
+  color: #1a237e; 
+  margin: 0; padding: 20px; 
+}
+    .container { 
       max-width: 800px;
       margin: 0 auto;
       background: #ffffff;
+      border-radius: 8px; 
+      padding: 20px; 
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+      border: 2px solid #90caf9; }
+    h1 { text-align: center; color: #0d47a1; } 
+    .info-section { 
+      display: flex;
+      justify-content: space-between; 
+      align-items: center; margin: 20px 0;
+    } 
+    .info-section img { max-width: 100%; 
+      height: auto; border-radius: 8px; 
+      }
+    .donation-summary 
+    {
+      background: #bbdefb;
+      padding: 15px; 
+      border: 2px solid #64b5f6;
       border-radius: 8px;
-      padding: 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      border: 2px solid #a5d6a7; /* Bordas em verde suave */
+      text-align: center; width: 40%; 
     }
-    h1, h2 {
-      text-align: center;
-      color: #388e3c; /* Verde mais intenso para os títulos */
-    }
-    .image, .gallery {
-      text-align: center;
-      margin: 20px 0;
-    }
-    .image img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-    }
-    /* Galeria com imagens lado a lado */
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    .gallery img {
-      width: 100%;
-      height: auto;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-    .pix, .donation {
-      text-align: center;
-      margin-top: 30px;
-    }
-    .pix p, .donation p {
+    .donation-summary p 
+    {
+      margin: 10px 0; 
       font-size: 1.2em;
-      font-weight: bold;
     }
-    .button {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 20px;
-      background: #43a047; /* Botão verde */
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
-      font-weight: bold;
-      cursor: pointer;
-      border: none;
+    .button { display: inline-block;
+    margin-top: 10px; 
+    padding: 10px 20px;
+    background: #1976d2; 
+    color: #fff; 
+    text-decoration: none; 
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
     }
-    .button:hover {
-      background: #388e3c; /* Verde mais escuro ao passar o mouse */
+    .button:hover
+    {
+    background: #1565c0;
     }
-    input[type="number"] {
-      padding: 8px;
-      font-size: 1em;
-      width: 150px;
-      margin-right: 10px;
-      border: 1px solid #a5d6a7;
-      border-radius: 4px;
+    input[type="number"], input[type="text"]
+    {
+    padding: 8px;
+    font-size: 1em;
+    width: 150px;
+    margin: 5px;
+    border: 1px solid #64b5f6; 
+    border-radius: 4px;
     }
   </style>
-  <script>
-    // Função para copiar a chave Pix para a área de transferência
-    function copyPixKey() {
-      const pixKey = document.getElementById("pixKey").textContent;
-      navigator.clipboard.writeText(pixKey)
-        .then(() => { alert("Chave Pix copiada: " + pixKey); })
-        .catch(err => { alert("Erro ao copiar: " + err); });
+  <script> const donationGoal = 7000;
+  let totalDonation = parseFloat(localStorage.getItem("totalDonation")) || 0;
+  let donorList = JSON.parse(localStorage.getItem("donorList")) || [];
+  function updateDonationDisplay() { document.getElementById("donationTotal").textContent = totalDonation.toFixed(2);
+  document.getElementById("donorCount").textContent = donorList.length;
+  document.getElementById("goalStatus").textContent = totalDonation >= donationGoal
+    ? "Meta alcançada! Obrigado pela sua generosidade!" 
+    : `Meta: R$ ${donationGoal.toFixed(2)} | Faltam: R$ ${(donationGoal - totalDonation).toFixed(2)}`;
     }
-
-    // Lógica simples para atualizar o total de doações
-    let totalDonation = 0;
-    function addDonation() {
-      const donationInput = document.getElementById("donationInput");
+    function addDonation() { 
+      const donationInput = document.getElementById("donationInput"); 
+      const donorNameInput = document.getElementById("donorNameInput");
       const donationValue = parseFloat(donationInput.value);
-      if (isNaN(donationValue) || donationValue <= 0) {
-        alert("Digite um valor válido.");
-        return;
-      }
-      totalDonation += donationValue;
-      document.getElementById("donationTotal").textContent = totalDonation.toFixed(2);
-      donationInput.value = "";
-    }
-  </script>
-</head>
-<body>
-  <div class="container">
-    <h1>Arrecadação para Conserto do Carro - motorista de app</h1>
+      const donorName = donorNameInput.value.trim(); 
+      
+      if (!donorName) { 
+        alert("Por favor, insira seu nome."); 
+        return; 
+      } 
+      if (isNaN(donationValue) || donationValue <= 0) { 
+        alert("Digite um valor válido."); 
+        return; 
+      } 
+      totalDonation += donationValue; 
+      donorList.push({ name: donorName, value: donationValue }); 
+      
+      localStorage.setItem("totalDonation", totalDonation); 
+      localStorage.setItem("donorList", JSON.stringify(donorList));
+      
+      updateDonationDisplay();
+      donationInput.value = ""; 
+      donorNameInput.value = "";
+    } 
     
-    <!-- Imagem principal -->
-    <div class="image">
-      <img src="2.jpeg" alt="Foto Principal do Carro">
-    </div>
-    
-    <p>Meu marido foi vítima de um golpe: bandidos se passaram por passageiros, solicitaram uma corrida, anunciaram o assalto e, na fuga, capotaram meu carro – o único instrumento de trabalho dele como motorista de aplicativo.<br>
-      Precisamos de ajuda para realizar o conserto para que ele possa voltar a trabalhar.<br>
-Agradeço imensamente por qualquer apoio e por compartilhar essa campanha.</p>
-        
-    <!-- Seção da chave Pix -->
-    <div class="pix">
-      <p>Chave Pix: <span id="pixKey">amanda.slopes17@gmail.com</span></p>
-      <button class="button" onclick="copyPixKey()">Clique aqui para copiar a chave Pix</button>
-      <p>Recebedor: Amanda da Silva Lopes</p><br>
-      <p>Banco: Caixa Econômica Federal</p>
-    </div>
-
-    <!-- Seção de atualização de valor de doação, abaixo da chave Pix -->
-    <div class="donation">
-      <h2>Atualizar Valor de Doação</h2>
-      <p>Total de doações: R$ <span id="donationTotal">0.00</span></p>
-      <input type="number" id="donationInput" placeholder="Valor da doação" step="0.01">
-      <button class="button" onclick="addDonation()">Adicionar Doação</button>
-    </div>
-    
-<!-- Galeria de imagens (lado a lado) -->
-    <div class="gallery">
-      <h2>Galeria de Imagens</h2>
-      <img src="1.jpeg" alt="Imagem 1">
-      <img src="3.jpeg" alt="Imagem 3">
-      <img src="4.jpeg" alt="Imagem 4">
-      <img src="5.jpeg" alt="Imagem 5">
-    </div>
-  </div>
-  
-  <footer style="text-align: center; margin-top: 30px; font-size: 1.1em; color: #2e7d32;">
-  <p>“Dai, e vos será dado; boa medida, recalcada, sacudida e transbordante vos darão; porque, com a mesma medida com que medirdes, vos medirão também.” (Lucas 6:38)</p><br>
-  <p>Agradecemos de coração sua generosidade e contribuição. Que Deus abençoe abundantemente sua vida!</p>
-</footer>
-</body>
+    window.onload = updateDonationDisplay; 
+  </script> 
+</head> 
+  <body> 
+    <div class="container"> 
+      <h1>Arrecadação para Conserto do Carro - motorista de app</h1>
+      <div class="info-section"> 
+        <div class="image">
+          <img src="2.jpeg" alt="Foto Principal do Carro"> 
+        </div> <div class="donation-summary"> 
+          <p>Arrecadado</p> 
+          <p>R$ <span id="donationTotal">0.00</span></p>
+          <p>Meta</p>
+          <p>R$ 7.000,00</p> 
+          <p>Apoiadores</p> 
+          <p><span id="donorCount">0</span></p>
+        </div>
+      </div> 
+      
+      <p>Meu marido foi vítima de um golpe: bandidos se passaram por passageiros, solicitaram uma corrida, anunciaram o assalto e, na fuga, capotaram o carro – o único instrumento de trabalho dele como motorista de aplicativo.<br>
+        Precisamos de ajuda para realizar o conserto para que ele possa voltar a trabalhar.<br>
+        Agradeço imensamente por qualquer apoio e por compartilhar essa campanha.</p>
+      
+      <div class="pix">
+        <p>Chave Pix: <span id="pixKey">amanda.slopes17@gmail.com</span></p>
+        <button class="button" onclick="copyPixKey()">Clique aqui para copiar a chave Pix</button>
+      </div> 
+      <div class="donation">
+        <h2>Atualizar Valor de Doação</h2>
+        <p>Total de doações: R$ <span id="donationTotal">0.00</span></p> 
+        <p>Meta: R$ 7.000,00</p> 
+        <p><span id="goalStatus"></span></p> 
+        <input type="text" id="donorNameInput" 
+          placeholder="Seu nome">
+        <input type="number" id="donationInput" placeholder="Valor da doação" step="0.01">
+        <button class="button" onclick="addDonation()">Adicionar Doação</button> 
+      </div>
+    </div> <footer style="text-align: 
+             center; margin-top: 30px;
+             font-size: 1.1em;
+             color: #1a237e;">
+      <p>“Dai, e vos será dado; boa medida, recalcada, sacudida e transbordante vos darão; porque, com a mesma medida com que medirdes, vos medirão também.” (Lucas 6:38)</p><br>
+      <p>Agradecemos de coração sua generosidade e contribuição.<br>
+        Que Deus abençoe abundantemente sua vida!</p> 
+    </footer>
+  </body>
 </html>
