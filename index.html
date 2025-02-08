@@ -35,7 +35,7 @@ body {
      height: auto;
      border-radius: 8px; } 
    
-   .donation-summary .donation-box {
+  .donation-summary .donation-box {
   background-color: #1e3c72; /* Azul mais escuro */
   color: #ffffff; /* Texto em branco */
   padding: 20px;
@@ -47,20 +47,46 @@ body {
   margin: 10px 0;
 }
    
-   .button {
-     display: inline-block;
-     margin-top: 10px;
-     padding: 10px 20px;
-     background: #1976d2;
-     color: #fff;
-     text-decoration: none;
-     border-radius: 5px; 
-     font-weight: bold;
-     cursor: pointer;
-     border: none; }
-   
-   .button:hover {
-     background: #1565c0;}
+   .pix {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.pix h2 {
+  color: #1e3c72;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+}
+
+.pix-info {
+  background-color: #e3f2fd; /* Azul claro */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: inline-block; /* Para ficar centralizado */
+}
+
+.pix-info p {
+  margin: 10px 0;
+  font-size: 1.1em;
+}
+
+.button {
+  padding: 12px 25px;
+  background-color: #1e3c72; /* Azul escuro */
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 15px;
+}
+
+.button:hover {
+  background-color: #1565c0; /* Azul mais escuro quando passa o mouse */
+}
    
    input[type="number"], input[type="text"] { 
      padding: 8px;
@@ -98,12 +124,16 @@ body {
  
  </style>
   
- <script> // Função para copiar a chave Pix para a área de transferência function copyPixKey() {
-   const pixKey = document.getElementById("pixKey")
-     .textContent; 
-   navigator.clipboard.writeText(pixKey) .then(() => { alert("Chave Pix copiada: " + pixKey); })
-     .catch(err => { alert("Erro ao copiar: " + err); });
-   }
+ <script> <!-- Seção da chave Pix -->
+<div class="pix">
+  <h2>Chave Pix</h2>
+  <div class="pix-info">
+    <p><strong>Chave:</strong> <span id="pixKey">amanda.slopes17@gmail.com</span></p>
+    <p><strong>Recebedor:</strong> Amanda da Silva Lopes</p>
+    <p><strong>Banco:</strong> Caixa Econômica Federal</p>
+    <button class="button" onclick="copyPixKey()">Clique aqui para copiar a chave Pix</button>
+  </div>
+</div>
    // Lógica para atualizar o valor de doações let totalDonation = 0;
    let donatorsCount = 0;
    function addDonation() {
