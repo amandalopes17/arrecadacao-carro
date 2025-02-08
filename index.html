@@ -35,17 +35,17 @@ body {
      height: auto;
      border-radius: 8px; } 
    
-   .donation-summary {
-     background: #bbdefb;
-     padding: 15px;
-     border: 2px solid #64b5f6;
-     border-radius: 8px;
-     text-align: center; 
-     width: 40%; }
-   
-   .donation-summary p {
-     margin: 10px 0;
-     font-size: 1.2em;}
+   .donation-summary .donation-box {
+  background-color: #1e3c72; /* Azul mais escuro */
+  color: #ffffff; /* Texto em branco */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.donation-summary p {
+  margin: 10px 0;
+}
    
    .button {
      display: inline-block;
@@ -129,21 +129,25 @@ body {
  <div class="container">
    <h1>Arrecadação para Conserto do Carro<br>
      Motorista de App</h1>
-   <!-- Seção da imagem principal --> 
-   <div class="info-section">
-     <div class="image"> <img src="2.jpeg" alt="Foto Principal do Carro">
-     </div> <!-- Quadro de resumo da arrecadação -->
-     <div class="donation-summary">
-       <p><strong>Arrecadado</strong></p>
-       <p id="donationTotal">R$ 0.00</p> 
-       <p><strong>Meta</strong></p> <p>R$ 7.000,00</p>
-       <p><strong>Apoiadores</strong></p>
-       <p id="donatorsCount">0</p>
-     </div>
-   </div>
-   <p>Meu marido foi vítima de um golpe: bandidos se passaram por passageiros, solicitaram uma corrida, anunciaram o assalto e, na fuga, capotaram o carro – o único instrumento de trabalho dele como motorista de aplicativo.<br> 
-     Precisamos de ajuda para realizar o conserto para que ele possa voltar a trabalhar.<br>
-     Agradeço imensamente por qualquer apoio e por compartilhar essa campanha.</p><br>
+   <!-- Seção com a foto principal e o painel de informações -->
+<div class="info-section">
+  <!-- Foto principal -->
+  <img src="2.jpeg" alt="Foto Principal do Carro">
+  
+  <!-- Painel de informações (arrecadado, meta e apoiadores) dentro da caixinha azul -->
+  <div class="donation-summary">
+    <div class="donation-box">
+      <p><strong>Arrecadado:</strong> R$ <span id="donationTotal">0.00</span></p>
+      <p><strong>Meta:</strong> R$ 7.000,00</p>
+      <p><strong>Apoiadores:</strong> <span id="donatorsCount">0</span></p>
+    </div>
+  </div>
+</div>
+
+   <p>Meu marido foi vítima de um golpe: bandidos se passaram por passageiros, solicitaram uma corrida, anunciaram o assalto e, na fuga, capotaram o carro,<br>
+     o único instrumento de trabalho dele como motorista de aplicativo.<br> 
+    Precisamos de ajuda para realizar o conserto para que ele possa voltar a trabalhar.<br>
+    Agradeço imensamente por qualquer apoio e por compartilhar essa campanha.</p><br>
    
 <!-- Seção da chave Pix -->
    <div class="pix">
