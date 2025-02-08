@@ -29,11 +29,21 @@
       text-align: center;
       margin: 20px 0;
     }
-    .image img, .gallery img {
+    .image img {
       max-width: 100%;
       height: auto;
       border-radius: 8px;
+    }
+    /* Galeria com imagens lado a lado */
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .gallery img {
+      width: 22%; /* Ajuste esse valor conforme necessário */
       margin: 5px;
+      border-radius: 8px;
     }
     .pix, .donation {
       text-align: center;
@@ -95,33 +105,38 @@
   <div class="container">
     <h1>Arrecadação para Conserto do Carro</h1>
     
+    <!-- Imagem principal -->
     <div class="image">
-      <!-- Imagem principal (substitua pelo caminho ou URL correto) -->
-      <img src="imagem/2.jpeg" alt="Foto do Carro">
+      <img src="2.jpeg" alt="Foto Principal do Carro">
     </div>
     
     <p>Fui vítima de um golpe: bandidos se passaram por passageiros, solicitaram uma corrida, anunciaram o assalto e, na fuga, capotaram meu carro – meu único instrumento de trabalho como motorista de aplicativo. Preciso de ajuda para realizar o conserto e voltar a trabalhar. Agradeço imensamente por qualquer apoio e por compartilhar essa campanha.</p>
     
+    <!-- Seção da chave Pix -->
     <div class="pix">
       <p>Chave Pix: <span id="pixKey">amanda.slopes17@gmail.com</span></p>
       <button class="button" onclick="copyPixKey()">Clique aqui para copiar a chave Pix</button>
     </div>
-    
-    <div class="gallery">
-      <h2>Galeria de Imagens</h2>
-      <!-- Substitua as imagens pelos seus arquivos -->
-      <img src="1.jpeg" alt="Imagem 1">
-      <img src="3.jpeg." alt="Imagem 3">
-      <img src="4.jpeg" alt="Imagem 4">
-      <img src="5.jpeg" alt="Imagem 5">
-    </div>
-    
+
+    <!-- Seção de atualização de valor de doação, abaixo da chave Pix -->
     <div class="donation">
       <h2>Atualizar Valor de Doação</h2>
       <p>Total de doações: R$ <span id="donationTotal">0.00</span></p>
       <input type="number" id="donationInput" placeholder="Valor da doação" step="0.01">
       <button class="button" onclick="addDonation()">Adicionar Doação</button>
     </div>
+<!-- Galeria de imagens (lado a lado) -->
+    <div class="gallery">
+      <h2>Galeria de Imagens</h2>
+      <img src="1.jpeg" alt="Imagem 1">
+      <img src="3.jpeg" alt="Imagem 3">
+      <img src="4.jpeg" alt="Imagem 4">
+      <img src="5.jpeg" alt="Imagem 5">
+    </div>
   </div>
+  <footer style="text-align: center; margin-top: 30px; font-size: 1.1em; color: #2e7d32;">
+  <p>“Dai, e vos será dado; boa medida, recalcada, sacudida e transbordante vos darão; porque, com a mesma medida com que medirdes, vos medirão também.” (Lucas 6:38)</p>
+  <p>Agradecemos de coração sua generosidade e contribuição. Que Deus abençoe abundantemente sua vida!</p>
+</footer>
 </body>
 </html>
