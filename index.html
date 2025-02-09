@@ -124,32 +124,8 @@
       font-weight: bold;
       margin-top: 20px;
     }
-
-    /* Escondendo o botão de Zerar Dados inicialmente */
-    #resetButton {
-      display: none;
-    }
   </style>
   <script>
-    // Função para verificar a senha e mostrar o botão de zerar dados
-    function checkPassword() {
-      const password = prompt("Digite a senha para mostrar o botão de zerar dados:");
-      const correctPassword = "minhasenha"; // Defina aqui a senha que você deseja
-      if (password === correctPassword) {
-        document.getElementById("resetButton").style.display = "inline-block"; // Exibe o botão
-      } else {
-        alert("Senha incorreta. O botão não será exibido.");
-      }
-    }
-
-    // Função para zerar os dados
-    function resetData() {
-      localStorage.removeItem("totalDonation");
-      localStorage.removeItem("donatorsCount");
-      alert("Dados zerados com sucesso!");
-      window.location.reload(); // Recarrega a página para mostrar os dados zerados
-    }
-
     // Recuperar dados do localStorage ao carregar a página
     let totalDonation = parseFloat(localStorage.getItem("totalDonation")) || 0;
     let donatorsCount = parseInt(localStorage.getItem("donatorsCount")) || 0;
@@ -158,6 +134,36 @@
     function updateDonationInfo() {
       document.getElementById("donationTotal").textContent = `R$ ${totalDonation.toFixed(2)}`;
       document.getElementById("donatorsCount").textContent = donatorsCount;
+    }
+
+    // Função para adicionar uma doação
+    function addDonation() {
+      const donatorName = document.getElementById("donatorName").value;
+      const donationAmount = parseFloat(document.getElementById("donationInput").value);
+
+      if (donatorName && donationAmount > 0) {
+        totalDonation += donationAmount;
+        donatorsCount++;
+        localStorage.setItem("totalDonation", totalDonation);
+        localStorage.setItem("donatorsCount", donatorsCount);
+
+        // Atualiza a tela
+        updateDonationInfo();
+
+        // Limpar os campos de entrada
+        document.getElementById("donatorName").value = "";
+        document.getElementById("donationInput").value = "";
+      } else {
+        alert("Por favor, insira um nome válido e valor da doação maior que 0.");
+      }
+    }
+
+    // Função para copiar a chave Pix
+    function copyPixKey() {
+      const pixKey = document.getElementById("pixKey").textContent;
+      navigator.clipboard.writeText(pixKey).then(() => {
+        alert("Chave Pix copiada para a área de transferência!");
+      });
     }
 
     window.onload = updateDonationInfo;
@@ -177,8 +183,7 @@
       </div>
     </div>
 
-    <p class="justify-text">Meu marido foi vítima de um golpe: bandidos se passaram por passageiros, solicitaram uma corrida, anunciaram o assalto e, na fuga, capotaram o carro, o único instrumento de trabalho dele como motorista de aplicativo.<br>
-      Precisamos de ajuda para realizar o conserto para que ele possa voltar a trabalhar.<br>
+    <p class="justify-text">Meu marido foi vítima de um golpe: bandidos se passaram por passageiros, solicitaram uma corrida, anunciaram o assalto e, na fuga, capotaram o carro, o único instrumento de trabalho dele como motorista de aplicativo. Precisamos de ajuda para realizar o conserto para que ele possa voltar a trabalhar.<br>
       Agradeço imensamente por qualquer apoio e por compartilhar essa campanha.</p>
 
     <div class="pix-section">
@@ -198,12 +203,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Botão para mostrar o botão de zerar dados -->
-    <button class="button-copy" onclick="checkPassword()">Mostrar botão de Zerar Dados</button>
-
-    <!-- Botão para zerar os dados (inicialmente escondido) -->
-    <button id="resetButton" class="button-copy" onclick="resetData()">Zerar Dados</button>
 
     <div class="gallery">
       <h2>Galeria de Imagens</h2>
