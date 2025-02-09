@@ -135,23 +135,6 @@
     function updateDonationInfo() {
       document.getElementById("donationTotal").textContent = `R$ ${totalDonation.toFixed(2)}`;
       document.getElementById("donatorsCount").textContent = donatorsCount;
-      console.log('Total Arrecadado: ', totalDonation); // Verificação
-      console.log('Apoiares: ', donatorsCount); // Verificação
-    }
-
-    function showImage(index) {
-      const galleryImage = document.getElementById("galleryImage");
-      galleryImage.src = images[index];
-    }
-
-    function showPreviousImage() {
-      currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-      showImage(currentImageIndex);
-    }
-
-    function showNextImage() {
-      currentImageIndex = (currentImageIndex + 1) % images.length;
-      showImage(currentImageIndex);
     }
 
     function addDonation() {
@@ -189,6 +172,17 @@
       }).catch(err => {
         alert("Erro ao copiar chave Pix: " + err);
       });
+    }
+
+    function clearData() {
+      localStorage.removeItem("totalDonation");
+      localStorage.removeItem("donatorsCount");
+      localStorage.removeItem("donators");
+      totalDonation = 0;
+      donatorsCount = 0;
+      donators = [];
+      updateDonationInfo(); // Atualiza os valores na página após limpar os dados
+      alert("Dados zerados com sucesso! Agora você pode começar novamente.");
     }
 
     // Chamar a função para atualizar as informações na página ao carregar
@@ -231,13 +225,13 @@
       </div>
     </div>
 
+    <div>
+      <button class="button-copy" onclick="clearData()">Zerar Dados</button>
+    </div>
+
     <div class="gallery">
       <h2>Galeria de Imagens</h2>
       <img id="galleryImage" src="1.jpeg" alt="Imagem da galeria">
-      <div class="carousel-buttons">
-        <button onclick="showPreviousImage()">Anterior</button>
-        <button onclick="showNextImage()">Próximo</button>
-      </div>
     </div>
   </div>
   <footer>
