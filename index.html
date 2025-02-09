@@ -124,13 +124,35 @@
       font-weight: bold;
       margin-top: 20px;
     }
+
+    /* Escondendo o botão de Zerar Dados inicialmente */
+    #resetButton {
+      display: none;
+    }
   </style>
   <script>
+    // Função para verificar a senha e mostrar o botão de zerar dados
+    function checkPassword() {
+      const password = prompt("Digite a senha para mostrar o botão de zerar dados:");
+      const correctPassword = "minhasenha"; // Defina aqui a senha que você deseja
+      if (password === correctPassword) {
+        document.getElementById("resetButton").style.display = "inline-block"; // Exibe o botão
+      } else {
+        alert("Senha incorreta. O botão não será exibido.");
+      }
+    }
+
+    // Função para zerar os dados
+    function resetData() {
+      localStorage.removeItem("totalDonation");
+      localStorage.removeItem("donatorsCount");
+      alert("Dados zerados com sucesso!");
+      window.location.reload(); // Recarrega a página para mostrar os dados zerados
+    }
+
     // Recuperar dados do localStorage ao carregar a página
     let totalDonation = parseFloat(localStorage.getItem("totalDonation")) || 0;
     let donatorsCount = parseInt(localStorage.getItem("donatorsCount")) || 0;
-    let currentImageIndex = 0;
-    const images = ["1.jpeg", "2.jpeg", "3.jpeg", "4.jpeg", "5.jpeg"];
 
     // Atualizar os valores na página
     function updateDonationInfo() {
@@ -138,80 +160,7 @@
       document.getElementById("donatorsCount").textContent = donatorsCount;
     }
 
-    function showImage(index) {
-      const galleryImage = document.getElementById("galleryImage");
-      galleryImage.src = images[index];
-    }
-
-    function showPreviousImage() {
-      currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-      showImage(currentImageIndex);
-    }
-
-    function showNextImage() {
-      currentImageIndex = (currentImageIndex + 1) % images.length;
-      showImage(currentImageIndex);
-    }
-
-    function addDonation() {
-      const donationInput = document.getElementById("donationInput");
-      const nameInput = document.getElementById("donatorName");
-      const donationValue = parseFloat(donationInput.value);
-      const donorName = nameInput.value.trim();
-
-      if (isNaN(donationValue) || donationValue <= 0 || donorName === "") {
-        alert("Por favor, preencha o nome e digite um valor válido.");
-        return;
-      }
-
-      // Atualizar os valores de doação e número de doadores
-      totalDonation += donationValue;
-      donatorsCount++;
-      
-      // Atualizar no localStorage
-      localStorage.setItem("totalDonation", totalDonation);
-      localStorage.setItem("donatorsCount", donatorsCount);
-
-      updateDonationInfo();
-
-      // Limpar os campos
-      donationInput.value = "";
-      nameInput.value = "";
-    }
-
-    function copyPixKey() {
-      const pixKey = document.getElementById("pixKey").textContent;
-      navigator.clipboard.writeText(pixKey).then(() => {
-        alert("Chave Pix copiada com sucesso!");
-      }).catch(err => {
-        alert("Erro ao copiar chave Pix: " + err);
-      });
-    }
-
-    // Função para autenticar a exibição do botão "Zerar Dados"
-    function revealClearDataButton() {
-      const password = prompt("Digite a senha para zerar os dados:");
-      const correctPassword = "minhasenha"; // Altere para a senha desejada
-
-      if (password === correctPassword) {
-        // Exibe o botão "Zerar Dados"
-        document.getElementById("clearDataButton").style.display = "inline-block";
-      } else {
-        alert("Senha incorreta!");
-      }
-    }
-
-    // Função para zerar os dados
-    function clearData() {
-      localStorage.clear();  // Limpa todos os dados
-      alert("Dados zerados!");
-      location.reload();  // Recarrega a página para aplicar as mudanças
-    }
-
-    // Chamar a função para atualizar as informações na página ao carregar
-    window.onload = function() {
-      updateDonationInfo();
-    }
+    window.onload = updateDonationInfo;
   </script>
 </head>
 <body>
@@ -228,7 +177,8 @@
       </div>
     </div>
 
-    <p class="justify-text">Meu marido foi vítima de um golpe: bandidos se passaram por passageiros, solicitaram uma corrida, anunciaram o assalto e, na fuga, capotaram o carro, o único instrumento de trabalho dele como motorista de aplicativo. Precisamos de ajuda para realizar o conserto para que ele possa voltar a trabalhar.<br>
+    <p class="justify-text">Meu marido foi vítima de um golpe: bandidos se passaram por passageiros, solicitaram uma corrida, anunciaram o assalto e, na fuga, capotaram o carro, o único instrumento de trabalho dele como motorista de aplicativo.<br>
+      Precisamos de ajuda para realizar o conserto para que ele possa voltar a trabalhar.<br>
       Agradeço imensamente por qualquer apoio e por compartilhar essa campanha.</p>
 
     <div class="pix-section">
@@ -246,12 +196,14 @@
           <p>Valor: <input type="number" id="donationInput" placeholder="Valor da doação" step="0.01"></p>
           <button class="button-copy" onclick="addDonation()">Adicionar Doação</button>
         </div>
-        <!-- Botão para zerar os dados (inicialmente oculto) -->
-        <div>
-          <button id="clearDataButton" class="button-copy" onclick="clearData()" style="display: none;">Zerar Dados</button>
-        </div>
       </div>
     </div>
+
+    <!-- Botão para mostrar o botão de zerar dados -->
+    <button class="button-copy" onclick="checkPassword()">Mostrar botão de Zerar Dados</button>
+
+    <!-- Botão para zerar os dados (inicialmente escondido) -->
+    <button id="resetButton" class="button-copy" onclick="resetData()">Zerar Dados</button>
 
     <div class="gallery">
       <h2>Galeria de Imagens</h2>
@@ -261,12 +213,7 @@
         <button onclick="showNextImage()">Próximo</button>
       </div>
     </div>
-
-    <div>
-      <button onclick="revealClearDataButton()">Mostrar botão de Zerar Dados</button>
-    </div>
   </div>
-
   <footer>
     <p>Agradecemos de coração sua generosidade e contribuição.<br>Que Deus abençoe abundantemente sua vida!</p>
     <p><a href="https://g1.globo.com/es/espirito-santo/videos-estv-1-edicao/video/motorista-de-app-tem-carro-roubado-em-vila-velha-13314333.ghtml" target="_blank">Clique aqui para ver a notícia sobre esse golpe</a></p>
