@@ -136,6 +136,8 @@
     function updateDonationInfo() {
       document.getElementById("donationTotal").textContent = `R$ ${totalDonation.toFixed(2)}`;
       document.getElementById("donatorsCount").textContent = donatorsCount;
+      console.log('Total Arrecadado: ', totalDonation); // Verificação
+      console.log('Apoiares: ', donatorsCount); // Verificação
     }
 
     function showImage(index) {
@@ -206,7 +208,8 @@
       </div>
     </div>
 
-    <p class="justify-text">Meu marido foi vítima de um golpe: bandidos se passaram por passageiros, solicitaram uma corrida, anunciaram o assalto e, na fuga, capotaram o carro, o único instrumento de trabalho dele como motorista de aplicativo. Precisamos de ajuda para realizar o conserto para que ele possa voltar a trabalhar.<br>
+    <p class="justify-text">Meu marido foi vítima de um golpe: bandidos se passaram por passageiros, solicitaram uma corrida, anunciaram o assalto e, na fuga, capotaram o carro, o único instrumento de trabalho dele como motorista de aplicativo.<br>
+      Precisamos de ajuda para realizar o conserto para que ele possa voltar a trabalhar.<br>
       Agradeço imensamente por qualquer apoio e por compartilhar essa campanha.</p>
 
     <div class="pix-section">
@@ -239,7 +242,6 @@
   <footer>
     <p>Agradecemos de coração sua generosidade e contribuição.<br>Que Deus abençoe abundantemente sua vida!</p>
     <p><a href="https://g1.globo.com/es/espirito-santo/videos-estv-1-edicao/video/motorista-de-app-tem-carro-roubado-em-vila-velha-13314333.ghtml" target="_blank">Clique aqui para ver a notícia sobre esse golpe</a></p>
-
   </footer>
 </body>
 </html>
