@@ -129,12 +129,28 @@
     // Recuperar dados do localStorage ao carregar a página
     let totalDonation = parseFloat(localStorage.getItem("totalDonation")) || 0;
     let donatorsCount = parseInt(localStorage.getItem("donatorsCount")) || 0;
-    let donators = JSON.parse(localStorage.getItem("donators")) || []; // Armazenar as doações anteriores
+    let currentImageIndex = 0;
+    const images = ["1.jpeg", "2.jpeg", "3.jpeg", "4.jpeg", "5.jpeg"];
 
     // Atualizar os valores na página
     function updateDonationInfo() {
       document.getElementById("donationTotal").textContent = `R$ ${totalDonation.toFixed(2)}`;
       document.getElementById("donatorsCount").textContent = donatorsCount;
+    }
+
+    function showImage(index) {
+      const galleryImage = document.getElementById("galleryImage");
+      galleryImage.src = images[index];
+    }
+
+    function showPreviousImage() {
+      currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+      showImage(currentImageIndex);
+    }
+
+    function showNextImage() {
+      currentImageIndex = (currentImageIndex + 1) % images.length;
+      showImage(currentImageIndex);
     }
 
     function addDonation() {
@@ -151,12 +167,10 @@
       // Atualizar os valores de doação e número de doadores
       totalDonation += donationValue;
       donatorsCount++;
-      donators.push({ name: donorName, amount: donationValue });
-
+      
       // Atualizar no localStorage
       localStorage.setItem("totalDonation", totalDonation);
       localStorage.setItem("donatorsCount", donatorsCount);
-      localStorage.setItem("donators", JSON.stringify(donators));
 
       updateDonationInfo();
 
@@ -174,19 +188,31 @@
       });
     }
 
+    // Função para autenticar a exibição do botão "Zerar Dados"
+    function checkPassword() {
+      const password = prompt("Digite a senha para zerar os dados:");
+      const correctPassword = "91922144"; // Altere para a senha desejada
+
+      if (password === correctPassword) {
+        // Exibe o botão "Zerar Dados"
+        document.getElementById("clearDataButton").style.display = "inline-block";
+      } else {
+        alert("Senha incorreta!");
+      }
+    }
+
+    // Função para zerar os dados
     function clearData() {
-      localStorage.removeItem("totalDonation");
-      localStorage.removeItem("donatorsCount");
-      localStorage.removeItem("donators");
-      totalDonation = 0;
-      donatorsCount = 0;
-      donators = [];
-      updateDonationInfo(); // Atualiza os valores na página após limpar os dados
-      alert("Dados zerados com sucesso! Agora você pode começar novamente.");
+      localStorage.clear();  // Limpa todos os dados
+      alert("Dados zerados!");
+      location.reload();  // Recarrega a página para aplicar as mudanças
     }
 
     // Chamar a função para atualizar as informações na página ao carregar
-    window.onload = updateDonationInfo;
+    window.onload = function() {
+      updateDonationInfo();
+      checkPassword();
+    }
   </script>
 </head>
 <body>
@@ -222,16 +248,20 @@
           <p>Valor: <input type="number" id="donationInput" placeholder="Valor da doação" step="0.01"></p>
           <button class="button-copy" onclick="addDonation()">Adicionar Doação</button>
         </div>
+        <!-- Botão para zerar os dados (inicialmente oculto) -->
+        <div>
+          <button id="clearDataButton" class="button-copy" onclick="clearData()" style="display: none;">Zerar Dados</button>
+        </div>
       </div>
-    </div>
-
-    <div>
-      <button class="button-copy" onclick="clearData()">Zerar Dados</button>
     </div>
 
     <div class="gallery">
       <h2>Galeria de Imagens</h2>
       <img id="galleryImage" src="1.jpeg" alt="Imagem da galeria">
+      <div class="carousel-buttons">
+        <button onclick="showPreviousImage()">Anterior</button>
+        <button onclick="showNextImage()">Próximo</button>
+      </div>
     </div>
   </div>
   <footer>
