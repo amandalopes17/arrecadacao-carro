@@ -132,7 +132,7 @@
     function updateDonationInfo() {
       document.getElementById("donationTotal").textContent = `R$ ${totalDonation.toFixed(2)}`;
       const remainingAmount = donationGoal - totalDonation;
-      document.getElementById("remainingAmount").textContent = `R$ ${remainingAmount > 0 ? remainingAmount.toFixed(2) : "Meta Atingida!"}`;
+      document.getElementById("remainingAmount").textContent = `R$ ${remainingAmount > 0 ? remainingAmount.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "Meta Atingida!"}`;
     }
 
     function addDonation() {
@@ -185,7 +185,7 @@
       <img src="2.jpeg" alt="Foto Principal do Carro">
 
       <div class="donation-box">
-        <p><strong>Arrecadado:</strong> R$ <span id="donationTotal">0.00</span></p>
+        <p><strong>Arrecadado:</strong> <span id="donationTotal">0,00</span></p>
         <p><strong>Meta:</strong> R$ 7.000,00</p>
         <p><strong>Valor Faltante:</strong> <span id="remainingAmount">R$ 7.000,00</span></p>
       </div>
