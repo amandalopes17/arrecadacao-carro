@@ -31,40 +31,13 @@
       font-size: 2.5em;
     }
 
-    .info-section {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin: 20px 0;
-    }
-
-    .info-section img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-    }
-
-    .donation-box {
-      background-color: #1e3c72;
-      color: #ffffff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      text-align: left;
-    }
-
-    .donation-box p {
-      margin: 10px 0;
-    }
-
     p.justify-text {
       text-align: justify;
       font-family: 'Roboto', sans-serif;
     }
 
     .pix-section {
-      display: flex;
-      justify-content: space-between;
+      text-align: center;
       margin: 30px 0;
     }
 
@@ -73,7 +46,7 @@
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      flex-basis: 45%;
+      display: inline-block;
     }
 
     .button-copy {
@@ -91,15 +64,6 @@
 
     .button-copy:hover {
       background-color: #1565c0;
-    }
-
-    .donation-update {
-      background-color: #ffffff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      display: flex;
-      justify-content: space-between;
     }
 
     .gallery {
@@ -126,30 +90,6 @@
     }
   </style>
   <script>
-    let totalDonation = parseFloat(localStorage.getItem("totalDonation")) || 0;
-    const donationGoal = 7000;
-
-    function updateDonationInfo() {
-      document.getElementById("donationTotal").textContent = `R$ ${totalDonation.toFixed(2)}`;
-      const remainingAmount = donationGoal - totalDonation;
-      document.getElementById("remainingAmount").textContent = `R$ ${remainingAmount > 0 ? remainingAmount.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "Meta Atingida!"}`;
-    }
-
-    function addDonation() {
-      const donatorName = document.getElementById("donatorName").value;
-      const donationAmount = parseFloat(document.getElementById("donationInput").value);
-
-      if (donatorName && donationAmount > 0) {
-        totalDonation += donationAmount;
-        localStorage.setItem("totalDonation", totalDonation);
-        updateDonationInfo();
-        document.getElementById("donatorName").value = "";
-        document.getElementById("donationInput").value = "";
-      } else {
-        alert("Por favor, insira um nome válido e valor da doação maior que 0.");
-      }
-    }
-
     function copyPixKey() {
       const pixKey = document.getElementById("pixKey").textContent;
       navigator.clipboard.writeText(pixKey).then(() => {
@@ -173,23 +113,11 @@
       currentImageIndex = (currentImageIndex + 1) % images.length;
       showImage(currentImageIndex);
     }
-
-    window.onload = updateDonationInfo;
   </script>
 </head>
 <body>
   <div class="container">
     <h1>Arrecadação para Conserto do Carro<br>Motorista de App</h1>
-
-    <div class="info-section">
-      <img src="2.jpeg" alt="Foto Principal do Carro">
-
-      <div class="donation-box">
-        <p><strong>Arrecadado:</strong> <span id="donationTotal">0,00</span></p>
-        <p><strong>Meta:</strong> R$ 7.000,00</p>
-        <p><strong>Valor Faltante:</strong> <span id="remainingAmount">R$ 7.000,00</span></p>
-      </div>
-    </div>
 
     <p class="justify-text">Meu marido foi vítima de um golpe: bandidos se passaram por passageiros, solicitaram uma corrida, anunciaram o assalto e, na fuga, capotaram o carro, o único instrumento de trabalho dele como motorista de aplicativo.<br>
       Precisamos de ajuda para realizar o conserto para que ele possa voltar a trabalhar.<br>
@@ -201,15 +129,6 @@
         <p><strong>Banco:</strong> Caixa Econômica Federal</p>
         <p><strong>Chave Pix:</strong> <span id="pixKey">amanda.slopes17@gmail.com</span></p>
         <button class="button-copy" onclick="copyPixKey()">Copiar Chave Pix</button>
-      </div>
-
-      <div class="donation-update">
-        <div>
-          <h2>Atualizar Valor de Doação</h2>
-          <p>Nome: <input type="text" id="donatorName" placeholder="Seu nome"></p>
-          <p>Valor: <input type="number" id="donationInput" placeholder="Valor da doação" step="0.01"></p>
-          <button class="button-copy" onclick="addDonation()">Adicionar Doação</button>
-        </div>
       </div>
     </div>
 
